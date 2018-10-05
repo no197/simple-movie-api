@@ -9,7 +9,13 @@ let MovieStore = require('./moviestore');
 let movieStore = new MovieStore();
 
 
-//Define GET method
+//Define GET to query string
+app.get('/movies', (req, res) => {
+    let movies = movieStore.search(req.query.title);
+    return res.json({"payload" : movies })
+})
+
+//Define GET method to response the movie JSON
 app.get('/movies', (req, res) => {
     res.json(movieStore.all());
 });
@@ -30,7 +36,7 @@ app.get('/movies/:title', (req, res) => {
     })
 })
 
-//Define GET method to create the new movie
+//Define POST method to create the new movie
 app.post('/movies', (req, res) => {
 
     //validate input the title is required
@@ -70,7 +76,7 @@ app.delete('/movies/:title', (req, res) => {
         res.statusCode = 404;
         return res.json({"message" : " movie not found"});
     }
-    
+
     //Delete movie
     movieStore.remove(req.params.title);
     return res.json({"message": "delete movie successfully"});

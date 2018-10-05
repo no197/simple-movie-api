@@ -34,10 +34,13 @@ class MovieStore {
         this.movieData = [newdMovie, ...otherMovie];
         return true;
     }
-    remove(title) {
-        
-    this.movieData = this.movieData.filter(movie => movie.Title !== title);
 
+    remove(title) { 
+    this.movieData = this.movieData.filter(movie => movie.Title !== title);
+    }
+
+    search (title) {
+        return  this.movieData.filter(movie => movie.Title.toLowerCase().includes(title.toLowerCase()));
     }
 }
 
